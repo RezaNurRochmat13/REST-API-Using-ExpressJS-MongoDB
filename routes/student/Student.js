@@ -16,10 +16,18 @@ router.get('/students', (request, response) => {
 });
 
 router.get('/student/:id', (request, response) => {
+    const _id = request.params.id;
     try {
-        
+        studentModel.findById({"_id": _id}, (_, student) => {
+            if (student == null) {
+                response.json({data: []});
+            } else {
+            response.json({data: student})
+            }
+        });
     } catch (error) {
-        
+        console.error(error.message);
+        response.status(500).json({message: 'Internal Server Error. Check Logs More Info'});
     }
 });
 
