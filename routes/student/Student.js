@@ -4,19 +4,23 @@ const router = express.Router();
 
 router.get('/students', (request, response) => {
     try {
-        const studentLists = studentModel.find();
-        response.json({
-            status: 'success',
-            data: studentLists
-        });
+        studentModel.find({}, (_error, students) => {
+            response.status(200).json({
+                status: 200,
+                data: students
+            })});
     } catch (error) {
         console.error(error.message);
         response.status(500).send({error: 'Internal Server Error. Check log more info'});
     }
 });
 
-router.get('student/:id', (request, response) => {
-    response.status(200).send('Detail Students');
+router.get('/student/:id', (request, response) => {
+    try {
+        
+    } catch (error) {
+        
+    }
 });
 
 router.post('/student', async (request, response) => {
@@ -26,7 +30,7 @@ router.post('/student', async (request, response) => {
         address: request.body.address
     });
     try {
-        const newStudentEntry = await student.save();
+        const newStudentEntry = student.save();
         response.status(201).json({
             status: 'success',
             message: 'Inserted Student',
